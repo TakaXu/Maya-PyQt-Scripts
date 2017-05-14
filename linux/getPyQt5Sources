@@ -4,13 +4,9 @@ MAYAQTBUILD="`dirname \"$0\"`" # Relative
 export MAYAQTBUILD="`( cd \"$MAYAQTBUILD\" && pwd )`" # Absolutized and normalized
 pushd $MAYAQTBUILD
  
-export SIPDIR=$MAYAQTBUILD/sip-4.18.1
-export MAYA_LOCATION=/usr/autodesk/maya2017
- 
-pushd $SIPDIR
-$MAYA_LOCATION/bin/mayapy ./configure.py
-make
-sudo make install
-popd
+wget -c --no-check-certificate https://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.7/PyQt5_gpl-5.7.tar.gz
+
+tar -zxf PyQt5_gpl-5.7.tar.gz
+rm -rf PyQt5_gpl-5.7.tar.gz
 
 popd
