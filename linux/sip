@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
- 
+. ./setup
+
 MAYAQTBUILD="`dirname \"$0\"`" # Relative
 export MAYAQTBUILD="`( cd \"$MAYAQTBUILD\" && pwd )`" # Absolutized and normalized
 pushd $MAYAQTBUILD
  
-export SIPDIR=$MAYAQTBUILD/sip-4.18.1
+export SIPDIR=$MAYAQTBUILD/sip-$SIPVER
 export MAYA_LOCATION=/usr/autodesk/maya2017
  
 pushd $SIPDIR

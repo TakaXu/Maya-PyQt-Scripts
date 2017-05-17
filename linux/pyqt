@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
- 
+. ./setup
+
 MAYAQTBUILD="`dirname \"$0\"`" # Relative
 export MAYAQTBUILD="`( cd \"$MAYAQTBUILD\" && pwd )`" # Absolutized and normalized
 pushd $MAYAQTBUILD
@@ -31,10 +32,10 @@ fi
 
 # The grep string should be in single quote('), if it is in double quote (""), 
 # shell will expand the variable, hence the intension of the below grep will fail 
-test=`grep 'Headers=$(DEVKIT_LOCATION)/include/Qt' $QTDIR/bin/qt.conf`
+test=`grep 'Headers=include/Qt' $QTDIR/bin/qt.conf`
 if [ -z "$test" ];
 then
-  echo "You need to edit $QTDIR/bin/qt.conf to use 'Headers=$(DEVKIT_LOCATION)/include/Qt'"
+  echo "You need to edit $QTDIR/bin/qt.conf to use 'Headers=include/Qt'"
   error=1
 fi
 
@@ -43,12 +44,12 @@ then
     exit
 fi
  
-export SIPDIR=$MAYAQTBUILD/sip-4.18.1
-export PYQTDIR=$MAYAQTBUILD/PyQt5_gpl-5.7
+export SIPDIR=$MAYAQTBUILD/sip-$SIPVER
+export PYQTDIR=$MAYAQTBUILD/PyQt5_gpl-$PYQTVER
  
 pushd $PYQTDIR
 export PATH=$QTDIR/bin:$PATH
-$QTDIR/bin/mayapy ./configure.py LIBDIR_QT=$LIBDIR_QT INCDIR_QT=$INCDIR_QT MOC=$QTDIR/bin/moc -w --no-designer-plugin 
+yes yes | $QTDIR/bin/mayapy ./configure.py LIBDIR_QT=$LIBDIR_QT INCDIR_QT=$INCDIR_QT MOC=$QTDIR/bin/moc -w #--no-designer-plugin 
 make -j 8
 sudo make install
 popd
